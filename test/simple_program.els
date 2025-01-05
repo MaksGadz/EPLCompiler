@@ -1,0 +1,7 @@
+integer function func_name (integer param1, character param2) {
+    display param1;
+    display param2;
+    return param1;
+}
+
+integer function main() {}
