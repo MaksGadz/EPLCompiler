@@ -1,6 +1,7 @@
 #include "lexer/token.h"
 #include "lexer/tokenizer.h"
 #include "lexer/scanner.h"
+#include "parser/parser.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -17,9 +18,9 @@ std::string read_file(std::string filename)
 Tokenizer init_tokenizer(std::string filename) 
 {
     std::string buffer = read_file(filename);
-    Scanner scanner(buffer);
-    Tokenizer tokenizer(scanner);
-    return tokenizer;
+    Scanner Scanner(buffer);
+    Tokenizer Tokenizer(Scanner);
+    return Tokenizer;
 }
 
 std::vector<Token> tokenize_file(Tokenizer tokenizer)
@@ -33,6 +34,8 @@ std::vector<Token> tokenize_file(Tokenizer tokenizer)
     }
     return tokens;
 }
+
+
 
 int main(int argc, char* argv[])
 {   
@@ -50,7 +53,10 @@ int main(int argc, char* argv[])
     // Tokenize the file.
     std::vector<Token> tokens = tokenize_file(tokenizer);
 
-    
+    // Initialize the parser.
+    Parser Parser(tokenizer);
+    Parser.parse_programm();
+
 
     std::cout << std::endl << std::endl;
 }

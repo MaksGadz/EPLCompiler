@@ -26,9 +26,8 @@ public:
   bool is_keyword(std::string token_value)
   {
     if (token_value == "if" || token_value == "while" || token_value == "else")
-    {
       return true;
-    }
+    
     return false;
   }
 
@@ -53,21 +52,19 @@ public:
     if (c == '-')
       return Token(TokenClass::MINUS);
     if (c == '(')
-      return Token(TokenClass::IDENTIFIER, std::string("LPAR"));
+      return Token(TokenClass::LPAR);
     if (c == ')')
-      return Token(TokenClass::IDENTIFIER, std::string("RPAR"));
+      return Token(TokenClass::RPAR);
     if (c == '{')
-    {
-      return Token(TokenClass::IDENTIFIER, std::string("LCUR"));
-    }
+      return Token(TokenClass::LBRACE);
     if (c == '}')
-      return Token(TokenClass::IDENTIFIER, std::string("RCUR"));
+      return Token(TokenClass::RBRACE);
     if (c == ',')
-      return Token(TokenClass::IDENTIFIER, std::string("COMMA"));
+      return Token(TokenClass::COMMA);
     if (c == '=')
-      return Token(TokenClass::IDENTIFIER, std::string("EQUALS"));
+      return Token(TokenClass::EQUALS);
     if (c == ';')
-      return Token(TokenClass::IDENTIFIER, std::string("SEMICOLON"));
+      return Token(TokenClass::SEMICOLON);
     if (std::isalpha(c))
     {
       std::string name = std::string(1, c);
@@ -103,7 +100,7 @@ public:
       }
 
       int value = std::stoi(digits);
-      return Token(TokenClass::NUMBER, value);
+      return Token(TokenClass::IDENTIFIER, value);
     }
 
     return std::nullopt;

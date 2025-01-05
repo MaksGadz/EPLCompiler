@@ -1,7 +1,3 @@
-integer function func_name (integer param1, character param2) {
-    display param1;
-    display param2;
-    return param1;
+integer function main() {
+    integer x = 3;
 }
-
-integer function main() {}

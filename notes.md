@@ -20,8 +20,7 @@
 
 # GRAMMAR
 ```
-    program ::= var_def* func_def* main_func 
-  main_func ::= integer function main () { var_def* stmt* }
+    program ::= integer function main () { var_def* stmt* }
   typed_var ::= type ID
     var_def ::= typed_var = literal NEWLINE
    func_def ::= type function ([typed_var [, typed_var]*]{0,1}) [-> type]{0,1}
@@ -32,8 +31,8 @@
 
 # Context-Free Grammar
 ```
-    program ::= var_def_rep func_def* main_func 
-  main_func ::= integer function main () { var_def_rep stmt_rep }
+
+    program ::= integer function main () { var_def_rep stmt_rep }
 
 var_def_rep ::= var_def var_def_rep | ε
     var_def ::= typed_var = literal NEWLINE

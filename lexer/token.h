@@ -12,10 +12,16 @@ enum TokenClass
   IDENTIFIER,
   KEYWORD,
   OPERATOR,
-  NUMBER,
   PLUS,
   MINUS,
   NEWLINE,
+  LPAR,
+  RPAR,
+  LBRACE,
+  RBRACE,
+  SEMICOLON,
+  COMMA,
+  EQUALS,
 };
 
 class Token
@@ -25,9 +31,18 @@ private:
   std::optional<std::any> value;
 
 public:
+  TokenClass get_type() { return type; }
+
   // Checks Equality of two tokens.
   bool operator==(const Token &other) const
   {
+    if (!this->value.has_value())
+    {
+      if (!other.value.has_value())
+        return this->type == other.type;
+      return false;
+    }
+
     TokenClass this_type = this->type;
     TokenClass other_type = other.type;
     std::any this_value = this->value.value();
@@ -65,7 +80,9 @@ public:
   {
     const std::string nameTT[] = {
       "IDENTIFIER", "KEYWORD", "OPERATOR", 
-      "NUMBER", "PLUS", "MINUS", "NEWLINE",
+      "PLUS", "MINUS", "NEWLINE",
+      "LPAR", "RPAR", "LBRACE", "RBRACE",
+      "SEMICOLON", "COMMA", "EQUALS"
     };
     const std::string tokenclass = nameTT[static_cast<int>(type)];
 
