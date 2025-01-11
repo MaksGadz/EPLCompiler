@@ -32,11 +32,13 @@
 # Context-Free Grammar
 ```
 
-    program ::= integer function main () { var_def_rep stmt_rep }
+      program ::= integer function main () { function_body }
 
-var_def_rep ::= var_def var_def_rep | ε
-    var_def ::= typed_var = literal NEWLINE
+function_body ::= var_def_rep stmt_rep
+
+  var_def_rep ::= var_def var_def_rep | ε
+      var_def ::= typed_var = literal NEWLINE
   
-  typed_var ::= type ID
+    typed_var ::= type ID
 
 ```

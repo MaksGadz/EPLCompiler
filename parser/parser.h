@@ -44,12 +44,13 @@ public:
         }
         
         throw std::invalid_argument(
-            "Error: Token of kind " + expected.token_to_string() + " not found");
+            "Unexpected Token\n Expected:\t" + expected.token_to_string() +
+            "\n Found:\t\t" + lexer.peek().token_to_string());
     }
 
     void parse_programm(){
         // parse main function.
-        hard_match(Token(TokenClass::IDENTIFIER, std::string("integer")));
+        hard_match(Token(TokenClass::TYPE, std::string("integer")));
         hard_match(Token(TokenClass::IDENTIFIER, std::string("function")));
         hard_match(Token(TokenClass::IDENTIFIER, std::string("main")));
         match(Token(TokenClass::LPAR));
@@ -59,17 +60,23 @@ public:
         while(check(Token(TokenClass::NEWLINE)))
             match(Token(TokenClass::NEWLINE));
 
-        while (!check(Token(TokenClass::RBRACE)))
-            parse_var_def();
+        parse_function_body();
 
         while(check(Token(TokenClass::NEWLINE)))
             match(Token(TokenClass::NEWLINE));
         
         match(Token(TokenClass::RBRACE));
     }
+    
+    void parse_function_body() 
+    {
+        while (check(Token(TokenClass::TYPE)))
+            parse_var_def();
+    }
 
-    void parse_var_def(){
-        match(Token(TokenClass::IDENTIFIER));
+    void parse_var_def()
+    {
+        match(Token(TokenClass::TYPE));
         match(Token(TokenClass::IDENTIFIER));
         match(Token(TokenClass::EQUALS));
         match(Token(TokenClass::IDENTIFIER));

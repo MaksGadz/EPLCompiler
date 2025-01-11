@@ -31,6 +31,13 @@ public:
     return false;
   }
 
+  bool is_type(std::string token_value)
+  {
+    if (token_value == "integer" || token_value == "float" || token_value == "double" || token_value == "char" || token_value == "string")
+      return true;
+    return false;
+  }
+
   // Reads and returns the next token.
   std::optional<Token> next()
   {
@@ -84,6 +91,8 @@ public:
 
       if (is_keyword(name))
         return Token(TokenClass::KEYWORD, name);
+      if (is_type(name))
+        return Token(TokenClass::TYPE, name);
 
       return Token(TokenClass::IDENTIFIER, name);
     }
