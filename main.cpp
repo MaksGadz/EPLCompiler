@@ -52,6 +52,10 @@ int main(int argc, char* argv[])
     
     // Tokenize the file.
     std::vector<Token> tokens = tokenize_file(tokenizer);
+    for (Token token : tokens)
+    {
+        std::cout << token.token_to_string() << " ";
+    }
 
     // Initialize the parser.
     Parser Parser(tokenizer);

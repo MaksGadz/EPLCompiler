@@ -23,6 +23,7 @@ enum TokenClass
   COMMA,
   EQUALS,
   TYPE,
+  LITERAL,
 };
 
 class Token
@@ -83,7 +84,8 @@ public:
       "IDENTIFIER", "KEYWORD", "OPERATOR", 
       "PLUS", "MINUS", "NEWLINE",
       "LPAR", "RPAR", "LBRACE", "RBRACE",
-      "SEMICOLON", "COMMA", "EQUALS", "TYPE"
+      "SEMICOLON", "COMMA", "EQUALS", "TYPE",
+      "LITERAL",
     };
     const std::string tokenclass = nameTT[static_cast<int>(type)];
 

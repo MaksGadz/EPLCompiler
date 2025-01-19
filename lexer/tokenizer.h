@@ -1,25 +1,19 @@
 #ifndef TOKENIZER_H
 #define TOKENIZER_H
 
+#include <iostream>
+#include <vector>
 #include "scanner.h"
 #include "token.h"
-#include <iostream>
 
 class Tokenizer
 {
 private:
   Scanner scanner;
-  std::optional<Token> buffer;
+  std::vector<Token> buffer;
 
 public:
   Tokenizer(Scanner scanner) : scanner(scanner), buffer() {}
-
-  Token peek()
-  {
-    if (!buffer.has_value())
-      buffer = next();
-    return buffer.value();
-  }
 
   Scanner &get_scanner() { return scanner; }
 
@@ -38,13 +32,31 @@ public:
     return false;
   }
 
+  std::vector<Token> peek()
+  {
+    for (int i = 0; i < 2 - buffer.size(); i++){
+      std::optional<Token> token = next();
+      if (token.has_value())
+        buffer.push_back(token.value());
+    }
+    return buffer;
+  }
+
   // Reads and returns the next token.
   std::optional<Token> next()
   {
-    if (buffer.has_value())
+    if (!buffer.empty())
     {
-      Token t = buffer.value();
-      buffer.reset();
+      Token t = buffer[0];
+      if (buffer.size() == 2)
+      {
+        Token temp = buffer[1];
+        buffer.clear();
+        buffer.push_back(temp);
+      }
+      else
+        buffer.clear();
+        
       return t;
     }
 
