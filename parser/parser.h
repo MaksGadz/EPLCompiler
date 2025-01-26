@@ -79,13 +79,7 @@ public:
         match({Token(TokenClass::RPAR)});
         match({Token(TokenClass::LBRACE)});
 
-        while (check({Token(TokenClass::NEWLINE)}))
-            match({Token(TokenClass::NEWLINE)});
-
         parse_function_body();
-
-        while (check({Token(TokenClass::NEWLINE)}))
-            match({Token(TokenClass::NEWLINE)});
 
         match({Token(TokenClass::RBRACE)});
     }
@@ -94,6 +88,9 @@ public:
     {
         while (check({Token(TokenClass::TYPE)}))
             parse_var_def();
+        
+        while (!check({Token(TokenClass::RBRACE)}))
+            parse_statement();
     }
 
     void parse_var_def()
@@ -107,6 +104,38 @@ public:
 
     void parse_statement()
     {
+        if (check({Token(TokenClass::IDENTIFIER), Token(TokenClass::EQUALS)})) {
+            parse_var_assignment();
+        }
+    }
+
+    void parse_var_assignment()
+    {
+        match({Token(TokenClass::IDENTIFIER)});
+        match({Token(TokenClass::EQUALS)});
+        parse_expression();
+        match({Token(TokenClass::SEMICOLON)});
+    }
+
+    void parse_expression()
+    {
+        if (check({Token(TokenClass::IDENTIFIER)}))
+            match({Token(TokenClass::IDENTIFIER)});
+        else if (check({Token(TokenClass::LITERAL)}))
+            match({Token(TokenClass::LITERAL)});
+        else if (check({Token(TokenClass::LPAR)})){
+            match({Token(TokenClass::LPAR)});
+            parse_expression();
+            match({Token(TokenClass::RPAR)});
+        }
+        else if (check({Token(TokenClass::IDENTIFIER), Token(TokenClass::OPERATOR)}))
+        {
+            match({Token(TokenClass::IDENTIFIER)});
+            match({Token(TokenClass::OPERATOR)});
+            parse_expression();
+        }
+        else
+            throw std::invalid_argument("Unexpected Token\n Expected:\tIdentifier or Literal\n Found:\t\t" + lexer.peek()[0].token_to_string());
     }
 };
 

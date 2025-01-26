@@ -38,16 +38,16 @@ public:
   // Checks Equality of two tokens.
   bool operator==(const Token &other) const
   {
-    if (!this->value.has_value())
+    if (!value.has_value())
     {
       if (!other.value.has_value())
-        return this->type == other.type;
+        return type == other.type;
       return false;
     }
 
-    TokenClass this_type = this->type;
-    TokenClass other_type = other.type;
-    std::any this_value = this->value.value();
+    TokenClass this_type = type;
+    TokenClass other_type = type;
+    std::any this_value = value.value();
     std::any other_value = other.value.value();
     
     bool same_value_type = this_value.type() == other_value.type();

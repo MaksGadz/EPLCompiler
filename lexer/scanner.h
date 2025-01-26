@@ -35,7 +35,7 @@ public:
     }
 
     char temp = stream[0];
-    stream = stream.substr(1);
+    stream = stream.length() > 0 ? stream.substr(1) : "";
     return temp;
   }
 };

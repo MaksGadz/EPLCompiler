@@ -45,26 +45,24 @@ public:
   // Reads and returns the next token.
   std::optional<Token> next()
   {
-    if (!buffer.empty())
-    {
+
+    if (!buffer.empty()) {
       Token t = buffer[0];
-      if (buffer.size() == 2)
-      {
+      
+      if (buffer.size() == 2) {
         Token temp = buffer[1];
         buffer.clear();
         buffer.push_back(temp);
-      }
-      else
+      } else {
         buffer.clear();
-        
+      }
+
       return t;
     }
 
     char c = scanner.next();
 
-    if (c == '\n')
-      return Token(TokenClass::NEWLINE);
-    if (std::isspace(c))
+    if (std::isspace(c) || c == '\t' || c == '\n') // Skip whitespace and newline.
       return next();
     if (c == '+')
       return Token(TokenClass::PLUS);

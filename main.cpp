@@ -27,9 +27,12 @@ std::vector<Token> tokenize_file(Tokenizer tokenizer)
 {
     std::vector<Token> tokens;
     std::optional<Token> token;
+    
     while(!tokenizer.get_scanner().stream_empty())
     {
         token = tokenizer.next();
+        if (!token.has_value())
+            return tokens;
         tokens.push_back(token.value());
     }
     return tokens;
@@ -52,10 +55,6 @@ int main(int argc, char* argv[])
     
     // Tokenize the file.
     std::vector<Token> tokens = tokenize_file(tokenizer);
-    for (Token token : tokens)
-    {
-        std::cout << token.token_to_string() << " ";
-    }
 
     // Initialize the parser.
     Parser Parser(tokenizer);
